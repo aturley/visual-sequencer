@@ -2,6 +2,10 @@
 
 Playing around with Rust and SDL2 and maybe OpenCV.
 
+## Usage
+
+Press `c` to start creating a region, `c` again to finish, `x` to cancel.
+
 ## Notes
 
 * Install `opencv4` before doing `cargo build` (`brew install opencv@4`).
