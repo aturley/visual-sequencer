@@ -142,10 +142,6 @@ fn main() -> Result<(), String> {
         let mouse_state = &mut event_pump.mouse_state();
         let buttons: HashSet<MouseButton> = mouse_state.pressed_mouse_buttons().collect();
         
-        if !buttons.is_empty() {
-            println!("X = {:?}, Y = {:?}", mouse_state.x(), mouse_state.y());
-        }
-
         for event in event_pump.poll_iter() {
             
             match event {
@@ -257,11 +253,8 @@ fn main() -> Result<(), String> {
             
             cvcore::in_range(&bgr2hsv_image, &lower, &upper, &mut mask);
             if zone.sequencer.check_and_reset_is_updated() {
-                if (cvcore::count_non_zero(&mask).expect("could not get non zero count") * 2) > (mask.cols() * mask.rows()) {
-                    println!("noteon 1 {} 127", zone.sequencer.id)
-                } else {
-                    println!("noteon 1 {} 0", zone.sequencer.id)
-                }
+                let velocity = (cvcore::count_non_zero(&mask).expect("could not get non zero count") * 127) / (mask.cols() * mask.rows());
+                println!("noteon 1 {} {};", zone.sequencer.id, velocity);
             }
         }
 
